@@ -1,3 +1,6 @@
+// TAK KLASA SIE NIE POTRZEBNA
+// USUNĘ JĄ NIEBAWEM, może:)
+
 import javax.swing.text.html.HTMLDocument;
 import java.io.*;
 import java.text.DecimalFormat;
