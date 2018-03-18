@@ -8,7 +8,7 @@ public class Main {
     static String slowa = "src/com/company/slowa.txt";
     static String litery = "src/com/company/litery.txt";
 
-    static Scanner sc=new Scanner(System.in);
+  //  static Scanner sc=new Scanner(System.in);
 
 //taki komentarz
     public static void main(String[] args) throws FileNotFoundException, IOException {
