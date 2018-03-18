@@ -10,6 +10,7 @@ public class Main {
 
     static Scanner sc=new Scanner(System.in);
 
+//taki komentarz
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
 
