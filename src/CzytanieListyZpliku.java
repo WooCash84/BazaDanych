@@ -8,124 +8,98 @@ import java.util.TreeMap;
 
 public class CzytanieListyZpliku {
 
-    static String slowa = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/slowa.txt";
-    static String litery = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/litery.txt";
+    static String product = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/products.txt";
+    static String price = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/prices.txt";
 
-    static String[] t1;
-    static String[] t2;
-    static Map<String, String> mapa = new TreeMap<>();
-    static Set<Map.Entry<String,String>> entrySet = mapa.entrySet();
+    static String[] products;
+    static String[] prices;
+    static Map<String, String> map = new TreeMap<>();
+    static Set<Map.Entry<String,String>> entrySet = map.entrySet();
 
-    static Scanner sc=new Scanner(System.in); //do wersji konsolowej
+    static Scanner sc=new Scanner(System.in); // console version
 
-    static String inputValue;  //wersja JOptionPane
-    static String inputValue1;
+    static String productInputValue;  // JOptionPane version
+    static String priceInputValue;
 
 
     public static void main(String[] args){
 
         try {
-            czytanieDanychZpliku();
+            readingFile();
         }catch (IOException e){
-            System.out.println("Błąd czytania danych");
+            System.out.println("Error - reading form file");
             e.printStackTrace();}
 
-        mapa.put("Fajki", "15");
-        mapa.put("banan", "200");
-
-        mapa.remove("Banan");
-        mapa.put("Brokul", "99");
-
-        wprowadzanieDanych();
-        rysowanieMapy();
-
-        System.out.println(mapa.keySet()+" "+mapa.values());
+        enteringData();
+        mapDrawing();
 
         try {
-            zapisDanychDoPliku();
+            writingFile();
         }catch (IOException e){
-            System.out.println("Bład zapisu danych");
+            System.out.println("Error - writing to file");
             e.printStackTrace();}
     }
-    public static void zapisDanychDoPliku() throws IOException{
-        FileWriter zapisSlow = new FileWriter(slowa);
-        FileWriter zapisLiczb = new FileWriter(litery);
-        BufferedWriter slowa = new BufferedWriter(zapisSlow);
-        BufferedWriter liczby = new BufferedWriter(zapisLiczb);
+    public static void writingFile() throws IOException{
+        FileWriter productWriter = new FileWriter(product);
+        FileWriter priceWriter = new FileWriter(price);
+        BufferedWriter product = new BufferedWriter(productWriter);
+        BufferedWriter price = new BufferedWriter(priceWriter);
 
-        Set<String> klucze = mapa.keySet();
-        StringBuilder trescDozapisu = new StringBuilder();
-        StringBuilder trescDozapisu1 = new StringBuilder();
-        for (String i : klucze) {
-            trescDozapisu.append(i + "-");
-            trescDozapisu1.append(mapa.get(i) + "-");
+        Set<String> keys = map.keySet();
+        StringBuilder productValue = new StringBuilder();
+        StringBuilder priceValue = new StringBuilder();
+        for (String i : keys) {
+            productValue.append(i + "-");
+            priceValue.append(map.get(i) + "-");
         }
-        trescDozapisu.deleteCharAt(trescDozapisu.lastIndexOf("-"));
-        trescDozapisu1.deleteCharAt(trescDozapisu1.lastIndexOf("-"));
+        productValue.deleteCharAt(productValue.lastIndexOf("-"));
+        priceValue.deleteCharAt(priceValue.lastIndexOf("-"));
 
-        slowa.write(String.valueOf(trescDozapisu));
-        liczby.write(String.valueOf(trescDozapisu1));
-        slowa.close();
-        liczby.close();
+        product.write(String.valueOf(productValue));
+        price.write(String.valueOf(priceValue));
+        product.close();
+        price.close();
 
-        System.out.println("Dokonano zapisu");
-        System.out.println(trescDozapisu+" "+trescDozapisu1);
+        System.out.println("Writing to file - completed");
+        System.out.println("Products: "+productValue+"\nPrices: "+priceValue);
     }
 
-    public static String podzial(String liczba){
+    public static void enteringData(){
+        System.out.println("Enter product: ");
+        productInputValue = JOptionPane.showInputDialog("Enter product: ");
+        
+        System.out.println("Enter price: ");
+        priceInputValue = JOptionPane.showInputDialog("Enter price: ");
 
-        float liczbaFlo = Float.parseFloat(liczba);
-        float wynik = liczbaFlo/15;
-
-        DecimalFormat Dformat = new DecimalFormat();
-        Dformat.setMaximumFractionDigits(2);
-        Dformat.setMinimumFractionDigits(2);
-        return Dformat.format(wynik);
+        map.put(productInputValue,priceInputValue);
     }
 
-    public static void wprowadzanieDanych(){
-        System.out.println("Wpisz produkt: ");
-        inputValue = JOptionPane.showInputDialog("Wpisz produkt: ");
-        //  String st = sc.nextLine();
-        //  t1[t1.length-1]=st;
-        //t1[t1.length-1]=inputValue;
+    public static void readingFile() throws IOException{
 
+        FileReader productReader = new FileReader(product);
+        FileReader priceReader = new FileReader(price);
+        BufferedReader productBuffer = new BufferedReader(productReader);
+        BufferedReader priceBuffer = new BufferedReader(priceReader);
 
-        System.out.println("Wpisz cene: ");
-        inputValue1 = JOptionPane.showInputDialog("Wpisz cene: ");
-       // t2[t1.length-1]=inputValue1;
-//        String st1 = sc.nextLine();
-//        t2[t1.length-1]=st1;
+        String plik1 = productBuffer.readLine();
+        String plik2 = priceBuffer.readLine();
+        products = plik1.split("-");
+        prices = plik2.split("-");
 
-        mapa.put(inputValue,inputValue1);
-    }
-
-    public static void czytanieDanychZpliku() throws IOException{
-
-        FileReader fOdczyt3 = new FileReader(slowa);
-        FileReader fOdczyt4 = new FileReader(litery);
-        BufferedReader bOdczyt3 = new BufferedReader(fOdczyt3);
-        BufferedReader bOdczyt4 = new BufferedReader(fOdczyt4);
-
-        String plik1 = bOdczyt3.readLine();
-        String plik2 = bOdczyt4.readLine();
-        t1 = plik1.split("-");
-        t2 = plik2.split("-");
-
-        for (int i = 0; i < t1.length; i++) {
-            mapa.put(t1[i],t2[i]);
+        for (int i = 0; i < products.length; i++) {
+            map.put(products[i],prices[i]);
         }
 
-        System.out.println(t1.length+" "+t2.length);
+        System.out.println("Number of: \nproducts / prices\n"
+                + products.length+" / "+prices.length);
 
-        System.out.println("Dokonano odczytu");
+        System.out.println("Reading from file - completed");
     }
 
-    public static void rysowanieMapy(){
-        System.out.println("Lista: Produkty / Ceny / Dzielenie");
+    public static void mapDrawing(){
+        System.out.println("List: \nProducts / Prices");
         for(Map.Entry<String, String> entry: entrySet) {
-            System.out.printf("%s : %s /15= %s %n", entry.getKey(), entry.getValue(),
-                    podzial(entry.getValue()));
+            System.out.println(entry.getKey()+" / "+entry.getValue());
         }
 
         JOptionPane.showMessageDialog(null, entrySet,
