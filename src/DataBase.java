@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class CzytanieListyZpliku {
+public class DataBase {
 
     static String product = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/products.txt";
     static String price = "C:/Users/Admin/Desktop/Projekt/BazaDanych/src/prices.txt";
